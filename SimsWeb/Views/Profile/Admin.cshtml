@@ -1,0 +1,51 @@
+﻿@using SimsWeb.ViewModels
+@model AdminProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "My Profile";
+}
+
+<h4 class="mb-3">My Profile</h4>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h5 class="card-title">Account</h5>
+                <p class="mb-1"><strong>Name:</strong> @Model.FullName</p>
+                <p class="mb-1"><strong>Email:</strong> @Model.Email</p>
+                <p class="mb-1"><strong>Created at:</strong> @Model.AccountCreatedAt.ToString("yyyy-MM-dd")</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h5 class="card-title mb-3">System Overview</h5>
+                <div class="d-flex flex-wrap gap-4">
+                    <div>
+                        <div class="fw-bold">@Model.TotalStudents</div>
+                        <div class="text-muted small">Students</div>
+                    </div>
+                    <div>
+                        <div class="fw-bold">@Model.TotalFaculty</div>
+                        <div class="text-muted small">Faculty</div>
+                    </div>
+                    <div>
+                        <div class="fw-bold">@Model.TotalCourses</div>
+                        <div class="text-muted small">Courses</div>
+                    </div>
+                    <div>
+                        <div class="fw-bold">@Model.TotalActiveClasses</div>
+                        <div class="text-muted small">Active Classes</div>
+                    </div>
+                    <div>
+                        <div class="fw-bold">@Model.TodayScheduleCount</div>
+                        <div class="text-muted small">Classes Today</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

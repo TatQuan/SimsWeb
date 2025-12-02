@@ -22,9 +22,11 @@
             </div>
 
             <div class="sims-sidebar-user">
-                <div class="sims-user-name">
+                <a asp-controller="Profile"
+                   asp-action="Index"
+                   class="sims-user-name sims-user-link">
                     @User.Identity?.Name
-                </div>
+                </a>
                 <div class="sims-user-role">
                     @(
                                         User.IsInRole("Admin") ? "Administrator" :

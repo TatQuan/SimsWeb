@@ -1,0 +1,135 @@
+﻿@using SimsWeb.ViewModels
+@model StudentProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "My Profile";
+}
+
+<h4 class="mb-3">My Profile</h4>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h5 class="card-title">Account</h5>
+                <p class="mb-1"><strong>Name:</strong> @Model.FullName</p>
+                <p class="mb-1"><strong>Email:</strong> @Model.Email</p>
+                @if (!string.IsNullOrWhiteSpace(Model.PhoneNumber))
+                {
+                    <p class="mb-1"><strong>Phone:</strong> @Model.PhoneNumber</p>
+                }
+                <p class="mb-1">
+                    <strong>Created at:</strong> @Model.AccountCreatedAt.ToString("yyyy-MM-dd")
+                </p>
+                <hr />
+                <p class="mb-1"><strong>Student code:</strong> @Model.StudentCode</p>
+                @if (Model.StudentCreatedAt.HasValue)
+                {
+                    <p class="mb-1">
+                        <strong>Student since:</strong> @Model.StudentCreatedAt.Value.ToString("yyyy-MM-dd")
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0 mb-3">
+            <div class="card-body">
+                <h5 class="card-title mb-2">Study Summary</h5>
+                <div class="d-flex flex-wrap gap-3">
+                    <div>
+                        <div class="fw-bold">@Model.CurrentClassCount</div>
+                        <div class="text-muted small">Active classes</div>
+                    </div>
+                    <div>
+                        <div class="fw-bold">@Model.TotalCredits</div>
+                        <div class="text-muted small">Total credits</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-3">
+            <div class="card-body">
+                <h5 class="card-title mb-2">Current Classes</h5>
+
+                @if (!Model.CurrentClasses.Any())
+                {
+                    <p class="text-muted small mb-0">You are not enrolled in any class.</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Class</th>
+                                    <th>Course</th>
+                                    <th>Credits</th>
+                                    <th>Teacher</th>
+                                    <th>Enrolled at</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var c in Model.CurrentClasses)
+                                {
+                                    <tr>
+                                        <td>@c.ClassCode @if (!string.IsNullOrWhiteSpace(c.ClassName)) {
+                                        <span>- @c.ClassName</span>
+                                    }
+    </td>
+                                    <td>@c.CourseCode - @c.CourseName</td>
+                                    <td>@c.Credits</td>
+                                    <td>@c.TeacherName</td>
+                                    <td>@c.EnrolledAt.ToString("yyyy-MM-dd")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                }
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title mb-2">Today’s Schedule (@DateTime.Today.ToString("ddd"))</h5>
+                @if (!Model.TodaySchedule.Any())
+                {
+                    <p class="text-muted small mb-0">No classes today.</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Class</th>
+                                    <th>Course</th>
+                                    <th>Room</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var s in Model.TodaySchedule)
+                                {
+                                    <tr>
+                                        <td>@s.StartTime.ToString(@"hh\:mm") - @s.EndTime.ToString(@"hh\:mm")</td>
+                                        <td>@s.ClassCode @if (!string.IsNullOrWhiteSpace(s.ClassName)) {
+                                        <span>- @s.ClassName</span>
+                                    }
+    </td>
+                                    <td>@s.CourseName</td>
+                                    <td>@s.Room</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                                }
+            </div>
+        </div>
+    </div>
+</div>
