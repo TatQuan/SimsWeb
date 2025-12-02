@@ -1,0 +1,74 @@
+﻿/* ----- Page layout ----- */
+.auth-page {
+    min-height: 100vh;
+    padding: 40px 16px;
+    background-color: #fff7ed; /* cam rất nhạt */
+}
+
+/* ----- Card ----- */
+.auth-card {
+    max-width: 380px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px 22px;
+    border: 1px solid #fcd9b6; /* cam nhạt */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.04);
+}
+
+    /* ----- Typography ----- */
+    .auth-card h3 {
+        font-weight: 600;
+        color: #ea580c; /* cam đậm */
+    }
+
+.text-muted {
+    color: #6b7280 !important;
+}
+
+/* ----- Input ----- */
+.auth-input {
+    border-radius: 10px;
+    border-color: #d1d5db;
+    font-size: 0.9rem;
+}
+
+    .auth-input:focus {
+        border-color: #f97316;
+        box-shadow: 0 0 0 0.15rem rgba(249, 115, 22, 0.25);
+    }
+
+/* ----- Buttons ----- */
+.btn-orange {
+    background-color: #f97316;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+    .btn-orange:hover {
+        background-color: #ea580c;
+    }
+
+/* ----- Links ----- */
+.auth-link {
+    color: #f97316;
+}
+
+    .auth-link:hover {
+        color: #ea580c;
+    }
+
+.auth-link-muted {
+    color: #6b7280;
+}
+
+    .auth-link-muted:hover {
+        color: #374151;
+    }
+
+/* ----- Errors ----- */
+.text-danger.small {
+    font-size: 0.8rem;
+}

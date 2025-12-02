@@ -1,0 +1,56 @@
+﻿@model SimsWeb.ViewModels.UserEditViewModel
+
+@{
+    ViewData["Title"] = "Edit User";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4 class="mb-3">Edit User</h4>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+
+        <form asp-action="Edit" asp-controller="Users" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="Id" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+            <div class="mb-3">
+                <label asp-for="FullName" class="form-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select asp-for="SelectedRole" class="form-select">
+                    <option value="">Guest (default)</option>
+                    @foreach (var role in Model.RoleList)
+                    {
+                        <option value="@role" selected="@(role == Model.SelectedRole)">
+                            @role
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn sims-btn-orange">
+                Save Changes
+            </button>
+            <a asp-controller="Users" asp-action="Index"
+               class="btn btn-outline-secondary ms-2">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿@model SimsWeb.ViewModels.StudentEditViewModel
+
+@{
+    ViewData["Title"] = "Create Student";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4 class="mb-3">Create Student</h4>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <form asp-action="Create" asp-controller="Students" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+            <div class="mb-3">
+                <label asp-for="UserId" class="form-label"></label>
+                <select asp-for="UserId" class="form-select"
+                        asp-items="@(new SelectList(Model.StudentUsers, "Id", "Email"))">
+                    <option value="">-- Select Student User --</option>
+                </select>
+                <span asp-validation-for="UserId" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn sims-btn-orange">Save</button>
+            <a asp-controller="AdminStudents" asp-action="Index"
+               class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>

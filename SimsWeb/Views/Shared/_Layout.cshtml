@@ -1,0 +1,128 @@
+﻿@using System.Security.Claims
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - SIMS</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="sims-body">
+
+    <div class="sims-shell d-flex">
+
+        <!-- SIDEBAR -->
+        <aside class="sims-sidebar d-flex flex-column">
+            <div class="sims-sidebar-header">
+                <div class="sims-logo">SIMS</div>
+            </div>
+
+            <div class="sims-sidebar-user">
+                <div class="sims-user-name">
+                    @User.Identity?.Name
+                </div>
+                <div class="sims-user-role">
+                    @(
+                                        User.IsInRole("Admin") ? "Administrator" :
+                                        User.IsInRole("Faculty") ? "Faculty" :
+                                        User.IsInRole("Student") ? "Student" : "Guest"
+                                        )
+                </div>
+            </div>
+
+            <div class="sims-sidebar-section-title">
+                Main Menu
+            </div>
+
+            @{
+                var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+                var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+            }
+
+            <nav class="nav flex-column sims-sidebar-nav">
+                <a asp-controller="Home" asp-action="Index"
+                   class="nav-link sims-sidebar-link @(currentController == "Home" ? "active" : "")">
+                    Home
+                </a>
+                @if (User.Identity?.IsAuthenticated == true && !User.IsInRole("Guest"))
+                {
+                    <a asp-controller="Enrollments" asp-action="Index"
+                       class="nav-link sims-sidebar-link @(currentController == "Enrollments" ? "active" : "")">
+                        View Class
+                    </a>
+                }
+
+                @* Các menu khác *@
+            </nav>
+
+            <div class="sims-sidebar-footer mt-auto">
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <form asp-controller="Account" asp-action="Logout" method="post">
+                        <button type="submit" class="btn btn-sm w-100 sims-btn-orange">
+                            Logout
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login"
+                       class="btn btn-sm w-100 sims-btn-orange mb-2">
+                        Login
+                    </a>
+                    <a asp-controller="Account" asp-action="Register"
+                       class="btn btn-sm w-100 sims-btn-outline-orange">
+                        Register
+                    </a>
+                }
+            </div>  
+        </aside>
+
+        <!-- MAIN AREA -->
+        <div class="sims-main d-flex flex-column flex-grow-1">
+
+            <!-- TOPBAR -->
+            <header class="sims-topbar d-flex align-items-center justify-content-between">
+                <div class="sims-topbar-left">
+                    <span class="sims-topbar-title">@ViewData["Title"]</span>
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+
+                    @* Điều hướng sang trang Admin: chỉ hiện với Admin *@
+
+                    @if (User.IsInRole("Admin") && currentController != "Admin")
+                    {
+                        <a asp-controller="Admin" asp-action="Index"
+                           class="btn btn-sm sims-btn-outline-light">
+                            Go to Admin
+                        </a>
+                    }
+
+                    <span class="sims-breadcrumb small text-muted">
+                        Home / @ViewData["Title"]
+                    </span>
+                </div>
+            </header>
+
+            <!-- CONTENT -->
+            <main class="sims-content flex-grow-1">
+                @RenderBody()
+            </main>
+
+            <!-- FOOTER -->
+            <footer class="sims-footer text-center small text-muted">
+                SIMS © @DateTime.Now.Year - Student Information Management System
+            </footer>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

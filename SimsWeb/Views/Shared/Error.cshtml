@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "An Error Occurred";
+    Layout = "_Layout";
+}
+
+<div class="sims-content sims-error-wrapper">
+    <div class="sims-error-card">
+        <div class="sims-error-code">500</div>
+
+        <div class="sims-error-title">
+            Something went wrong
+        </div>
+
+        <p class="sims-error-message">
+            An unexpected error occurred while processing your request.<br />
+            Please try again in a moment. If the issue persists, contact the administrator.
+        </p>
+
+        <div class="sims-error-actions">
+            <a asp-controller="Home" asp-action="Index" class="btn sims-btn-orange">
+                Back to Home
+            </a>
+            <button type="button" class="btn sims-btn-outline-orange" onclick="location.reload()">
+                Reload Page
+            </button>
+        </div>
+
+        <div class="sims-error-subtle">
+            @if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                <span>(Development environment: check logs for detailed error info)</span>
+            }
+            else
+            {
+                <span>Please verify your submitted data if the error occurred during a form action.</span>
+            }
+        </div>
+    </div>
+</div>

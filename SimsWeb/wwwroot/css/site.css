@@ -1,0 +1,219 @@
+﻿:root {
+    --sims-orange: #f97316; /* cam chính */
+    --sims-orange-soft: #fed7aa; /* cam rất nhạt */
+    --sims-bg: #f5f5f7; /* nền xám ngà, không chói */
+    --sims-border: #e5e7eb;
+    --sims-text-dark: #111827;
+}
+
+/* BODY */
+.sims-body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--sims-bg);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* SHELL */
+.sims-shell {
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sims-sidebar {
+    width: 230px;
+    background: #fffaf3; /* trắng pha cam rất nhạt */
+    border-right: 1px solid var(--sims-border);
+    padding-top: 10px;
+    display: flex; 
+    flex-direction: column; 
+}
+
+.sims-sidebar-header {
+    padding: 10px 18px;
+}
+
+.sims-logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--sims-orange);
+    letter-spacing: 1px;
+}
+
+.sims-sidebar-user {
+    padding: 8px 18px 12px;
+    border-bottom: 1px solid var(--sims-border);
+}
+
+.sims-user-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--sims-text-dark);
+}
+
+.sims-user-role {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.sims-sidebar-section-title {
+    padding: 12px 18px 6px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #9ca3af;
+}
+
+.sims-sidebar-nav {
+    padding: 0 10px;
+}
+
+.sims-sidebar-link {
+    border-radius: 6px;
+    margin: 3px 0;
+    color: #4b5563;
+    font-size: 0.9rem;
+}
+
+    .sims-sidebar-link:hover {
+        background: #ffedd5;
+        color: var(--sims-orange);
+        font-weight: 600;
+    }
+
+    .sims-sidebar-link.active {
+        background: var(--sims-orange);
+        color: #ffffff !important;
+        font-weight: 600;
+    }
+
+.sims-sidebar-footer {
+    padding: 14px 18px 18px;
+}
+
+/* BUTTONS */
+    .sims-btn-orange {
+    background: var(--sims-orange);
+    border-color: var(--sims-orange);
+    color: #ffffff;
+}
+
+    .sims-btn-orange:hover {
+        background: #ea580c;
+        border-color: #ea580c;
+        color: #ffffff;
+    }
+
+.sims-btn-outline-orange {
+    background: transparent;
+    border: 1px solid var(--sims-orange);
+    color: var(--sims-orange);
+}
+
+    .sims-btn-outline-orange:hover {
+        background: var(--sims-orange-soft);
+        border-color: var(--sims-orange);
+        color: var(--sims-orange);
+    }
+
+.sims-btn-outline-light {
+    background: transparent;
+    border: 1px solid #fed7aa;
+    color: #fefce8;
+    font-size: 0.8rem;
+}
+
+    .sims-btn-outline-light:hover {
+        background: #fff7ed;
+        color: #7c2d12;
+    }
+
+/* MAIN AREA */
+.sims-main {
+    background: var(--sims-bg);
+}
+
+/* TOPBAR */
+.sims-topbar {
+    height: 56px;
+    background: linear-gradient(90deg, var(--sims-orange), #fb923c);
+    color: #fefce8;
+    padding: 0 24px;
+    border-bottom: 1px solid #f97316;
+}
+
+.sims-topbar-title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* CONTENT + FOOTER */
+.sims-content {
+    padding: 18px 24px 24px;
+    background: #ffffff;
+    min-height: calc(100vh - 56px - 40px);
+}
+
+.sims-footer {
+    height: 40px;
+    border-top: 1px solid var(--sims-border);
+    background: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ERROR PAGE */
+.sims-error-wrapper {
+    min-height: calc(100vh - 56px - 40px); /* trừ topbar + footer nếu dùng layout hiện tại */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--sims-bg);
+}
+
+.sims-error-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px 36px;
+    max-width: 540px;
+    width: 100%;
+    box-shadow: 0 20px 30px rgba(15, 23, 42, 0.08);
+    border: 1px solid var(--sims-border);
+    text-align: center;
+}
+
+.sims-error-code {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--sims-orange);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.sims-error-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--sims-text-dark);
+    margin-bottom: 8px;
+}
+
+.sims-error-message {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+.sims-error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.sims-error-subtle {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 16px;
+}
+

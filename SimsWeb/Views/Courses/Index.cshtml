@@ -1,0 +1,61 @@
+﻿@model IEnumerable<SimsWeb.Models.Course>
+@{
+    ViewData["Title"] = "Manage Courses";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <h4>Manage Courses</h4>
+    <div>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-controller="Courses" asp-action="Deleted" class="btn btn-outline-secondary btn-sm me-2">
+                Recycle Bin
+            </a>
+
+            <a asp-controller="Courses" asp-action="Create" class="btn btn-sm sims-btn-orange">
+                + Add Course
+            </a>
+        }
+
+    </div>
+</div>
+
+<table class="table table-bordered table-sm">
+    <thead class="table-light">
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Credits</th>
+            <th>Description</th>
+            <th>Created</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Code</td>
+                <td>@c.Name</td>
+                <td>@c.Credits</td>
+                <td>@c.Description</td>
+                <td>@c.CreatedAt.ToString("yyyy-MM-dd")</td>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <td class="text-end">
+                        <a asp-action="Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+
+                        <form asp-action="SoftDelete" asp-route-id="@c.Id"
+                              method="post" style="display:inline;"
+                              onsubmit="return confirm('Move this course to Recycle Bin?');">
+                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

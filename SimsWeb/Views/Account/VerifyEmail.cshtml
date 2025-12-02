@@ -1,0 +1,46 @@
+﻿@using SimsWeb.ViewModels
+@model VerifyEmailViewModel
+@{
+    ViewData["Title"] = "Verify Email";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="auth-page d-flex align-items-center justify-content-center">
+    <div class="auth-card">
+        <div class="mb-4 text-center">
+            <h3 class="mb-1">Verify Email</h3>
+            <p class="text-muted small mb-0">Enter your email to receive a verification link</p>
+        </div>
+
+        <form method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label small mb-1"></label>
+                <input asp-for="Email" class="form-control auth-input" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn btn-orange w-100 py-2 mb-2">
+                Send Verification Email
+            </button>
+
+            <p class="text-center small mb-0">
+                <a asp-action="Login" class="auth-link-muted text-decoration-none">Back to Login</a>
+            </p>
+        </form>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-success mt-3 small">@ViewBag.Message</div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

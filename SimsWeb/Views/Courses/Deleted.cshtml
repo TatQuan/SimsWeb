@@ -1,0 +1,49 @@
+﻿@model IEnumerable<SimsWeb.Models.Course>
+@{
+    ViewData["Title"] = "Recycle Bin";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <h4>Deleted Courses</h4>
+    <a asp-controller="Courses" asp-action="Index" class="btn btn-outline-secondary btn-sm">
+        Back
+    </a>
+</div>
+
+<table class="table table-bordered table-sm">
+    <thead class="table-light">
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Credits</th>
+            <th>Description</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Code</td>
+                <td>@c.Name</td>
+                <td>@c.Credits</td>
+                <td>@c.Description</td>
+                <td class="text-end">
+
+                    <form asp-action="Restore" asp-route-id="@c.Id"
+                          method="post" style="display:inline;">
+                        <button class="btn btn-sm btn-outline-success me-1">Restore</button>
+                    </form>
+
+                    <form asp-action="HardDelete" asp-route-id="@c.Id"
+                          method="post" style="display:inline;"
+                          onsubmit="return confirm('Permanently delete this course? This action cannot be undone.');">
+                        <button class="btn btn-sm btn-outline-danger">Delete Permanently</button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

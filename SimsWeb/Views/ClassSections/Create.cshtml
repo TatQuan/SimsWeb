@@ -1,0 +1,58 @@
+﻿@model SimsWeb.ViewModels.ClassSectionViewModel
+
+@{
+    ViewData["Title"] = "Create Class Section";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4 class="mb-3">Create Class Section</h4>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <form asp-action="Create" asp-controller="ClassSections" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+            <div class="mb-3">
+                <label asp-for="Code" class="form-label"></label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CourseId" class="form-label"></label>
+                <select asp-for="CourseId" class="form-select"
+                        asp-items="@(new SelectList(Model.Courses, "Id", "Name"))">
+                    <option value="">-- Select Course --</option>
+                </select>
+                <span asp-validation-for="CourseId" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="TeacherId" class="form-label"></label>
+                <select asp-for="TeacherId" class="form-select">
+                    <option value="">-- Select Teacher --</option>
+                    @foreach (var t in Model.Teachers)
+                    {
+                        <option value="@t.Id">
+                            @t.User.FullName (@t.User.Email)
+                        </option>
+                    }
+                </select>
+                <span asp-validation-for="TeacherId" class="text-danger small"></span>
+            </div>
+
+
+            <button type="submit" class="btn sims-btn-orange">Save</button>
+            <a asp-controller="ClassSections" asp-action="Index"
+               class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>

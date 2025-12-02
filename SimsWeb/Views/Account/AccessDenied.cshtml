@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Access Denied";
+    Layout = "_Layout";
+}
+
+<div class="sims-content sims-error-wrapper">
+    <div class="sims-error-card">
+        <div class="sims-error-code">403</div>
+
+        <div class="sims-error-title">
+            You do not have permission to access this page.
+        </div>
+
+        @{
+            var returnUrl = Context.Request.Headers["Referer"].ToString();
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                returnUrl = Url.Action("Index", "Home");
+            }
+        }
+
+        <p class="sims-error-message">
+            If you believe this is a mistake, please contact the administrator.<br />
+            Return URL: @returnUrl
+        </p>
+
+        <div class="sims-error-actions">
+            <a asp-controller="Home" asp-action="Index" class="btn sims-btn-orange">
+                Back to Home
+            </a>
+        </div>
+    </div>
+</div>

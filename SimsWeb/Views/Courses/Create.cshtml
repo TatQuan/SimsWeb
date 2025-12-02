@@ -1,0 +1,46 @@
+﻿@model SimsWeb.ViewModels.CourseViewModel
+
+@{
+    ViewData["Title"] = "Add Course";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4 class="mb-3">Add Course</h4>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <form asp-action="Create" asp-controller="Courses" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+            <div class="mb-3">
+                <label asp-for="Code" class="form-label"></label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Credits" class="form-label"></label>
+                <input asp-for="Credits" class="form-control" type="number" />
+                <span asp-validation-for="Credits" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn sims-btn-orange">Save</button>
+            <a asp-controller="Courses" asp-action="Index"
+               class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
