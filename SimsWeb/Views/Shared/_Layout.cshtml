@@ -54,7 +54,24 @@
                        class="nav-link sims-sidebar-link @(currentController == "Enrollments" ? "active" : "")">
                         View Class
                     </a>
+
+                    @* Lịch học chỉ cho Student và Faculty *@
+                    @if (User.IsInRole("Student") || User.IsInRole("Faculty"))
+                    {
+                        <a asp-controller="Schedules"
+                           asp-action="Index"
+                           class="nav-link sims-sidebar-link @(currentController == "Schedules" ? "active" : "")">
+                            Schedule
+                        </a>
+                    }
                 }
+
+                <a asp-controller="Courses" asp-action="Index"
+                   class="nav-link sims-sidebar-link @(currentController == "Courses" ? "active" : "")">
+                    View Courses
+                </a>
+
+
 
                 @* Các menu khác *@
             </nav>

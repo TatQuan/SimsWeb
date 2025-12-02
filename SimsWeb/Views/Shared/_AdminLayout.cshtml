@@ -74,10 +74,12 @@
                     Add Students To Class
                 </a>
 
-              @*   <a asp-controller="Admin" asp-action="AssignTeachers"
-                   class="nav-link sims-sidebar-link">
-                    Add Teachers To Class
-                </a> *@
+                <a asp-controller="ClassSchedules"
+                   asp-action="Index"
+                   class="nav-link sims-sidebar-link @(currentController == "ClassSchedules" ? "active" : "")">
+                    Class Schedules
+                </a>
+
             </nav>
 
             <div class="sims-sidebar-footer mt-auto">

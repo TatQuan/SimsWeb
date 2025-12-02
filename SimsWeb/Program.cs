@@ -35,6 +35,8 @@ builder.Services.AddScoped<IClassSectionService, ClassSectionService>();
 builder.Services.AddScoped<IFacultyService, FacultyService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
+
 
 var app = builder.Build();
 

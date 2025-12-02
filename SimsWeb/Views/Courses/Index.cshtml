@@ -1,7 +1,12 @@
 ﻿@model IEnumerable<SimsWeb.Models.Course>
 @{
-    ViewData["Title"] = "Manage Courses";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    bool isStudentOrFaculty = User.IsInRole("Student") || User.IsInRole("Faculty") || User.IsInRole("Guest") || User.Identity?.IsAuthenticated == false;
+
+    ViewData["Title"] = isStudentOrFaculty?"Course":"Manage Courses";
+
+    Layout = isStudentOrFaculty
+        ? "~/Views/Shared/_Layout.cshtml"
+        : "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="d-flex justify-content-between mb-3">
@@ -30,7 +35,13 @@
             <th>Credits</th>
             <th>Description</th>
             <th>Created</th>
-            <th class="text-end">Actions</th>
+
+            @if (User.IsInRole("Admin"))
+            {
+                
+                <th class="text-end">Actions</th>
+            }
+
         </tr>
     </thead>
     <tbody>

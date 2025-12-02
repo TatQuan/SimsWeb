@@ -1,8 +1,10 @@
 ﻿@model SimsWeb.ViewModels.ClassEnrollmentViewModel
 
 @{
-    ViewData["Title"] = "Manage Class Enrollment";
     bool isStudentOrFaculty = User.IsInRole("Student") || User.IsInRole("Faculty");
+
+
+    ViewData["Title"] = isStudentOrFaculty?"Class Enrollment":"Manage Class Enrollment";
 
     Layout = isStudentOrFaculty
         ? "~/Views/Shared/_Layout.cshtml"

@@ -12,6 +12,8 @@ namespace SimsWeb.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<ClassSchedule> ClassSchedules { get; set; }
+
 
 
         public AppDbContext(DbContextOptions options) : base(options)

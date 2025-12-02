@@ -3,9 +3,10 @@
 @using System.Linq
 
 @{
-    ViewData["Title"] = "Class Enrollments";
-
     bool isStudentOrFaculty = User.IsInRole("Student") || User.IsInRole("Faculty");
+
+    ViewData["Title"] = isStudentOrFaculty?"Class":"Class Enrollments";
+
 
     Layout = isStudentOrFaculty
         ? "~/Views/Shared/_Layout.cshtml"

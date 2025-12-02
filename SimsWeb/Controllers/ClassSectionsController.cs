@@ -6,7 +6,7 @@ using SimsWeb.ViewModels;
 
 namespace SimsWeb.Controllers
 {
-
+    [Authorize(Roles = "Admin")]
     public class ClassSectionsController : Controller
     {
         private readonly IClassSectionService _classSectionService;
@@ -19,27 +19,12 @@ namespace SimsWeb.Controllers
         // =============== INDEX: danh sách lớp chưa xóa ===============
         public async Task<IActionResult> Index()
         {
-            if (User.IsInRole("Admin"))
-            {
-                var model = await _classSectionService.GetActiveSectionsAsync();
-                return View(model);
-            }
 
-            if (User.IsInRole("Faculty"))
-            {
-                //TODO: Get list of ClassSection that logger is assigned
-            }
-            else if (User.IsInRole("Student"))
-
-            {
-                //TODO: Get list of ClassSection that logger is assigned
-            }
-
-            return View();
+            var model = await _classSectionService.GetActiveSectionsAsync();
+            return View(model);
         }
 
         // =============== CREATE (GET) ===============
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -79,7 +64,6 @@ namespace SimsWeb.Controllers
         }
 
         // =============== EDIT (GET) ===============
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -126,7 +110,6 @@ namespace SimsWeb.Controllers
         }
 
         // =============== SOFT DELETE ===============
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -138,7 +121,6 @@ namespace SimsWeb.Controllers
         }
 
         // =============== RECYCLE BIN: danh sách đã xóa mềm ===============
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Deleted()
         {
@@ -147,7 +129,6 @@ namespace SimsWeb.Controllers
         }
 
         // =============== RESTORE ===============
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Restore(int id)
@@ -159,7 +140,6 @@ namespace SimsWeb.Controllers
         }
 
         // =============== HARD DELETE ===============
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> HardDelete(int id)

@@ -1,0 +1,57 @@
+﻿@using SimsWeb.Helpers
+@using SimsWeb.ViewModels
+@model ClassScheduleViewModel
+
+@{
+    ViewData["Title"] = "Create Schedule";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4 class="mb-3">Edit Schedule</h4>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <form asp-action="Edit" method="post">
+            <div class="mb-3">
+                <label asp-for="ClassSectionId" class="form-label"></label>
+                <select asp-for="ClassSectionId"
+                        class="form-control"
+                        asp-items="@(new SelectList(Model.ClassSections, "Id", "Code"))">
+                    <option value="">-- Select Class --</option>
+                </select>
+                <span asp-validation-for="ClassSectionId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DayOfWeek" class="form-label"></label>
+                <select asp-for="DayOfWeek" class="form-control">
+                    @foreach (DayOfWeek d in Enum.GetValues(typeof(DayOfWeek)))
+                    {
+                        <option value="@d">@d</option>
+                    }
+                </select>
+                <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Period" class="form-label"></label>
+                <select asp-for="Period" class="form-control">
+                    @foreach (var p in ScheduleTimeHelper.Periods)
+                    {
+                        <option value="@p.Index">@p.Label</option>
+                    }
+                </select>
+                <span asp-validation-for="Period" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Room" class="form-label"></label>
+                <input asp-for="Room" class="form-control" />
+                <span asp-validation-for="Room" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn sims-btn-orange">Save</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>

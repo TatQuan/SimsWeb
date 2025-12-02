@@ -19,12 +19,14 @@ public class CoursesController : Controller
         return View(courses);
     }
 
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Deleted()
     {
         var courses = await _courseService.GetDeletedAsync();
         return View(courses);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult Create()
     {
@@ -53,6 +55,7 @@ public class CoursesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
@@ -91,6 +94,7 @@ public class CoursesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SoftDelete(int id)
@@ -99,6 +103,7 @@ public class CoursesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Restore(int id)
@@ -107,6 +112,7 @@ public class CoursesController : Controller
         return RedirectToAction(nameof(Deleted));
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> HardDelete(int id)
