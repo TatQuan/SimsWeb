@@ -36,6 +36,9 @@ builder.Services.AddScoped<IFacultyService, FacultyService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
+builder.Services.AddScoped<ITeacherAssignmentService, AssignmentService>();
+builder.Services.AddScoped<IStudentAssignmentService, AssignmentService>();
+builder.Services.AddScoped<IFileStorageService, FileStorageService>();
 
 
 var app = builder.Build();

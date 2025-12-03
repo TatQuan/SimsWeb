@@ -1,0 +1,146 @@
+﻿@using SimsWeb.ViewModels
+@model AssignmentDetailViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Assignment Details";
+    var message = TempData["AssignmentMessage"] as string;
+}
+
+<h4 class="mb-3">Assignment Details</h4>
+
+@if (!string.IsNullOrWhiteSpace(message))
+{
+    <div class="alert alert-info">@message</div>
+}
+
+<div class="row g-3">
+    <div class="col-md-7">
+        <div class="card shadow-sm border-0 mb-3">
+            <div class="card-body">
+                <h5 class="card-title mb-1">@Model.Title</h5>
+                <div class="text-muted small mb-2">
+                    Class: @Model.ClassCode
+                    @if (!string.IsNullOrWhiteSpace(Model.ClassName))
+                    {
+                        <span>- @Model.ClassName</span>
+                    }
+                    <br />
+                    Course: @Model.CourseName<br />
+                    Teacher: @Model.TeacherName
+                </div>
+                <div class="mb-2">
+                    <strong>Deadline:</strong>
+                    @Model.DueAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+                    @if (Model.IsPastDeadline)
+                    {
+                        <span class="badge bg-danger ms-1">Past deadline</span>
+                    }
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.ExerciseFilePath) || !string.IsNullOrWhiteSpace(Model.GuideFilePath))
+                {
+                    <div class="mb-2">
+                        @if (!string.IsNullOrWhiteSpace(Model.ExerciseFilePath))
+                        {
+                            <div>
+                                <strong>Exercise file:</strong>
+                                <a href="@Model.ExerciseFilePath" target="_blank">Download</a>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.GuideFilePath))
+                        {
+                            <div>
+                                <strong>Guide file:</strong>
+                                <a href="@Model.GuideFilePath" target="_blank">Download</a>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>  @* <- thêm cái này *@
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title mb-2">My Submission</h5>
+
+                @if (Model.MySubmission == null)
+                {
+                    <p class="text-muted small">
+                        You haven't submitted this assignment yet.
+                    </p>
+                }
+                else
+                {
+                    <p class="mb-1">
+                        <strong>Submitted at:</strong>
+                        @Model.MySubmission.SubmittedAt?.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+                        @if (Model.MySubmission.IsLate)
+                        {
+                            <span class="badge bg-warning text-dark ms-1">Late</span>
+                        }
+                    </p>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.MySubmission.FilePath))
+                    {
+                        <p class="mb-1">
+                            <strong>File:</strong>
+                            <a href="@Model.MySubmission.FilePath" target="_blank">Download</a>
+                        </p>
+                    }
+
+                    @if (Model.MySubmission.Score.HasValue)
+                    {
+                        <p class="mb-1">
+                            <strong>Score:</strong> @Model.MySubmission.Score
+                        </p>
+                        @if (!string.IsNullOrWhiteSpace(Model.MySubmission.TeacherComment))
+                        {
+                            <p class="mb-0">
+                                <strong>Comment:</strong> @Model.MySubmission.TeacherComment
+                            </p>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted small mb-0">
+                            Not graded yet.
+                        </p>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title mb-2">Submit Assignment</h5>
+
+                @if (Model.IsPastDeadline)
+                {
+                    <div class="alert alert-warning small">
+                        The deadline has passed. You can still submit, but it may be counted as late depending on your teacher.
+                    </div>
+                }
+
+                <form asp-controller="Assignments"
+                      asp-action="Submit"
+                      asp-route-id="@Model.Id"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <div class="mb-3">
+                        <label class="form-label">File</label>
+                        <input type="file" name="file" class="form-control" />
+                    </div>
+
+                    <button type="submit" class="btn sims-btn-orange btn-sm">
+                        Submit / Resubmit
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary btn-sm ms-2">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

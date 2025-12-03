@@ -50,28 +50,32 @@
                    class="nav-link sims-sidebar-link @(currentController == "Home" ? "active" : "")">
                     Home
                 </a>
-                @if (User.Identity?.IsAuthenticated == true && !User.IsInRole("Guest"))
-                {
-                    <a asp-controller="Enrollments" asp-action="Index"
-                       class="nav-link sims-sidebar-link @(currentController == "Enrollments" ? "active" : "")">
-                        View Class
-                    </a>
-
-                    @* Lịch học chỉ cho Student và Faculty *@
-                    @if (User.IsInRole("Student") || User.IsInRole("Faculty"))
-                    {
-                        <a asp-controller="Schedules"
-                           asp-action="Index"
-                           class="nav-link sims-sidebar-link @(currentController == "Schedules" ? "active" : "")">
-                            Schedule
-                        </a>
-                    }
-                }
 
                 <a asp-controller="Courses" asp-action="Index"
                    class="nav-link sims-sidebar-link @(currentController == "Courses" ? "active" : "")">
                     View Courses
                 </a>
+
+                @if (User.IsInRole("Student") || User.IsInRole("Faculty"))
+                {
+                    <a asp-controller="Enrollments" asp-action="Index"
+                        class="nav-link sims-sidebar-link @(currentController == "Enrollments" ? "active" : "")">
+                        View Class
+                    </a>
+
+                    <a asp-controller="Schedules"
+                        asp-action="Index"
+                        class="nav-link sims-sidebar-link @(currentController == "Schedules" ? "active" : "")">
+                        Schedule
+                    </a>
+
+                    <a asp-controller="Assignments"
+                        asp-action="Index"
+                        class="nav-link sims-sidebar-link @(currentController == "Assignments" ? "active" : "")">
+                        Assignments
+                    </a>
+                }
+
 
 
 
