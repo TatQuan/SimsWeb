@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using SimsWeb.ViewModels;
+﻿using SimsWeb.ViewModels.Assignments;
 
-namespace SimsWeb.Services.Interfaces
+public interface IStudentAssignmentService
 {
-    public interface IStudentAssignmentService
-    {
-        Task<List<AssignmentListItemViewModel>> GetAssignmentsForStudentAsync(string studentUserId);
-        Task<AssignmentDetailViewModel?> GetAssignmentDetailForStudentAsync(int assignmentId, string studentUserId);
-        Task<bool> SubmitAsync(int assignmentId, string studentUserId, IFormFile file);
-    }
+    Task<List<ClassSectionCardVM>> GetStudentClassesAsync(int studentId);
+    Task<AssignmentDetailVM> GetAssignmentDetailAsync(int assignmentId, int studentId);
+
+    Task SubmitAsync(SubmitAssignmentVM model, int studentId);
 }

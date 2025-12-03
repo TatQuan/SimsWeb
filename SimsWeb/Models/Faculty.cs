@@ -24,5 +24,7 @@ namespace SimsWeb.Models
         // Mã giảng viên tự sinh: FAC0001, FAC0002,...
         [NotMapped]
         public string FacultyCode => $"FAC{Id.ToString().PadLeft(4, '0')}";
+        public ICollection<ClassSection> ClassSections { get; set; }
+    = new List<ClassSection>();
     }
 }

@@ -69,11 +69,24 @@
                         Schedule
                     </a>
 
-                    <a asp-controller="Assignments"
-                        asp-action="Index"
-                        class="nav-link sims-sidebar-link @(currentController == "Assignments" ? "active" : "")">
-                        Assignments
-                    </a>
+                    @if (User.IsInRole("Faculty"))
+                    {
+                        <a class="nav-link sims-sidebar-link @(currentController == "FacultyAssignment" ? "active" : "")"
+                            asp-controller="FacultyAssignment"
+                            asp-action="Index">
+                            Assignments
+                        </a>
+                    }
+
+                    <!-- Nếu là sinh viên -->
+                    @if (User.IsInRole("Student"))
+                    {
+                        <a class="nav-link sims-sidebar-link @(currentController == "StudentAssignment" ? "active" : "")"
+                            asp-controller="StudentAssignment"
+                            asp-action="Index">
+                            Assignments
+                        </a>
+                    }
                 }
 
 

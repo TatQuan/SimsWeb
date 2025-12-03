@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SimsWeb.ViewModels.Assignments.ClassSectionCardVM>
+
+@{
+    ViewData["Title"] = "My Classes";
+}
+
+<div class="row g-3">
+    @if (!Model.Any())
+    {
+        <div class="col-12">
+            <div class="alert alert-info">
+                You are not enrolled in any class.
+            </div>
+        </div>
+    }
+    else
+    {
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card shadow-sm sims-card">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@item.ClassName</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.CourseName</h6>
+                        <p class="card-text flex-grow-1">
+                            Students: @item.StudentCount
+                        </p>
+                        <a class="btn sims-btn-orange mt-auto"
+                           asp-controller="StudentAssignment"
+                           asp-action="ClassAssignments"
+                           asp-route-classSectionId="@item.ClassSectionId">
+                            View assignments
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

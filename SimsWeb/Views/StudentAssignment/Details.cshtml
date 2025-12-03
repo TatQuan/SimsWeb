@@ -1,0 +1,149 @@
+﻿@model SimsWeb.ViewModels.Assignments.AssignmentDetailVM
+
+@{
+    ViewData["Title"] = "Assignment Details";
+}
+
+<div class="mb-3">
+    <h4>@Model.Title</h4>
+    <p class="text-muted mb-1">
+        Class: @Model.ClassName (@Model.CourseName)
+    </p>
+    <p class="text-muted">
+        Due at: @Model.DueAt.ToString("yyyy-MM-dd HH:mm")
+    </p>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Description))
+    {
+        <p>@Model.Description</p>
+    }
+</div>
+
+<ul class="nav nav-tabs" id="assignmentTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="docs-tab" data-bs-toggle="tab"
+                data-bs-target="#docs-tab-pane" type="button" role="tab">
+            Documents
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="brief-tab" data-bs-toggle="tab"
+                data-bs-target="#brief-tab-pane" type="button" role="tab">
+            Assignment Brief
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="submission-tab" data-bs-toggle="tab"
+                data-bs-target="#submission-tab-pane" type="button" role="tab">
+            My Submission
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content mt-3" id="assignmentTabsContent">
+    <!-- Documents -->
+    <div class="tab-pane fade show active" id="docs-tab-pane" role="tabpanel" aria-labelledby="docs-tab">
+        <h5>Documents</h5>
+
+        @if (Model.Documents == null || !Model.Documents.Any())
+        {
+            <p class="text-muted">No documents.</p>
+        }
+        else
+        {
+            <ul class="list-group">
+                @foreach (var doc in Model.Documents)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>@doc.FileName</span>
+                        <a class="btn btn-sm sims-btn-outline-orange"
+                           href="@Url.Content(doc.DownloadUrl)"
+                           target="_blank">
+                            Download
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+    <!-- Brief -->
+    <div class="tab-pane fade" id="brief-tab-pane" role="tabpanel" aria-labelledby="brief-tab">
+        <h5>Main brief</h5>
+
+        @if (!string.IsNullOrWhiteSpace(Model.ExerciseDownloadUrl))
+        {
+            <a class="btn sims-btn-orange"
+               href="@Url.Content(Model.ExerciseDownloadUrl)"
+               target="_blank">
+                Download brief
+            </a>
+        }
+        else
+        {
+            <p class="text-muted">No brief file.</p>
+        }
+
+        @* nếu có GuideDownloadUrl thì hiển thị thêm *@
+        @if (!string.IsNullOrWhiteSpace(Model.GuideDownloadUrl))
+        {
+            <hr />
+            <h6>Guide file</h6>
+            <a class="btn btn-sm sims-btn-outline-orange"
+               href="@Url.Content(Model.GuideDownloadUrl)"
+               target="_blank">
+                Download guide
+            </a>
+        }
+    </div>
+
+    <!-- My Submission -->
+    <div class="tab-pane fade" id="submission-tab-pane" role="tabpanel" aria-labelledby="submission-tab">
+        <h5>My Submission</h5>
+
+        @if (Model.MySubmission != null)
+        {
+            <div class="alert alert-info">
+                <p>
+                    <strong>Last submitted:</strong>
+                    @Model.MySubmission.SubmittedAt.ToString("yyyy-MM-dd HH:mm")
+                </p>
+                <p>
+                    <strong>File:</strong>
+                    <a href="@Url.Content(Model.MySubmission.DownloadUrl)"
+                       target="_blank">
+                        @Model.MySubmission.FileName
+                    </a>
+                </p>
+                <p>
+                    <strong>Score:</strong>
+                    @(Model.MySubmission.Score.HasValue? Model.MySubmission.Score.ToString() : "Not graded yet")
+                </p>
+                @if (!string.IsNullOrWhiteSpace(Model.MySubmission.TeacherComment))
+                {
+                    <p><strong>Teacher comment:</strong> @Model.MySubmission.TeacherComment</p>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="text-muted">You have not submitted this assignment yet.</p>
+        }
+
+        <hr />
+
+        <h6>Submit / Resubmit</h6>
+        <form asp-controller="StudentAssignment"
+              asp-action="Submit"
+              method="post" enctype="multipart/form-data">
+            <input type="hidden" name="AssignmentId" value="@Model.AssignmentId" />
+            <div class="mb-3">
+                <label class="form-label">Choose file</label>
+                <input type="file" name="File" class="form-control" required />
+            </div>
+            <button type="submit" class="btn sims-btn-orange">
+                @(Model.MySubmission == null ? "Submit assignment" : "Resubmit assignment")
+            </button>
+        </form>
+    </div>
+</div>

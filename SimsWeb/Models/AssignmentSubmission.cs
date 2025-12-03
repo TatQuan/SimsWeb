@@ -29,5 +29,8 @@ namespace SimsWeb.Models
         public string? TeacherComment { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+
+        // (Optional) cho view: đã chấm hay chưa
+        public bool IsGraded => Score.HasValue;
     }
 }

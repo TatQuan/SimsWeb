@@ -1,0 +1,171 @@
+﻿@model SimsWeb.ViewModels.Assignments.ClassAssignmentPageVM
+
+@{
+    ViewData["Title"] = "Manage Assignments";
+}
+
+<div class="row g-3">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <h4 class="mb-0">@Model.ClassName</h4>
+                <small class="text-muted">@Model.CourseName</small>
+            </div>
+            <div>
+                <a class="btn btn-sm sims-btn-outline-orange"
+                   asp-controller="FacultyAssignment" asp-action="Index">
+                    Back to Classes
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEFT: danh sách assignment + recycle bin -->
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-white">
+                <strong>Assignments</strong>
+            </div>
+            <div class="card-body p-0">
+                @if (!Model.ActiveAssignments.Any())
+                {
+                    <div class="p-3 text-muted">
+                        No assignments yet. Create the first one on the right.
+                    </div>
+                }
+                else
+                {
+                    <div class="list-group list-group-flush">
+                        @foreach (var a in Model.ActiveAssignments)
+                        {
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <a asp-action="Manage"
+                                       asp-route-classSectionId="@Model.ClassSectionId"
+                                       asp-route-assignmentId="@a.Id"
+                                       class="text-decoration-none">
+                                        <strong>@a.Title</strong>
+                                    </a>
+                                    <div class="small text-muted">
+                                        Due: @a.DueAt.ToString("yyyy-MM-dd HH:mm")
+                                    </div>
+                                </div>
+                                <form asp-action="SoftDelete" method="post" class="ms-2">
+                                    <input type="hidden" name="id" value="@a.Id" />
+                                    <input type="hidden" name="classSectionId" value="@Model.ClassSectionId" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Recycle bin -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <strong>Recycle bin</strong>
+            </div>
+            <div class="card-body p-0">
+                @if (!Model.DeletedAssignments.Any())
+                {
+                    <div class="p-3 text-muted">
+                        No deleted assignments.
+                    </div>
+                }
+                else
+                {
+                    <div class="list-group list-group-flush">
+                        @foreach (var a in Model.DeletedAssignments)
+                        {
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>@a.Title</strong>
+                                    <div class="small text-muted">
+                                        Due: @a.DueAt.ToString("yyyy-MM-dd HH:mm")
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-1">
+                                    <form asp-action="Restore" method="post">
+                                        <input type="hidden" name="id" value="@a.Id" />
+                                        <input type="hidden" name="classSectionId" value="@Model.ClassSectionId" />
+                                        <button type="submit" class="btn btn-sm btn-outline-success">
+                                            Restore
+                                        </button>
+                                    </form>
+                                    <form asp-action="HardDelete" method="post">
+                                        <input type="hidden" name="id" value="@a.Id" />
+                                        <input type="hidden" name="classSectionId" value="@Model.ClassSectionId" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            Delete permanently
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: form create / edit -->
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <strong>
+                    @(Model.EditModel.Id.HasValue ? "Edit Assignment" : "Create Assignment")
+                </strong>
+                @if (Model.EditModel.Id.HasValue)
+                {
+                    <a asp-action="Manage"
+                       asp-route-classSectionId="@Model.ClassSectionId"
+                       class="btn btn-sm sims-btn-outline-orange">
+                        Clear form
+                    </a>
+                }
+            </div>
+            <div class="card-body">
+                <form asp-action="Save" method="post">
+                    <input type="hidden" asp-for="EditModel.Id" />
+                    <input type="hidden" asp-for="EditModel.ClassSectionId" />
+
+                    <div class="mb-3">
+                        <label asp-for="EditModel.Title" class="form-label"></label>
+                        <input asp-for="EditModel.Title" class="form-control" />
+                        <span asp-validation-for="EditModel.Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="EditModel.Description" class="form-label"></label>
+                        <textarea asp-for="EditModel.Description" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="EditModel.Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="EditModel.DueAt" class="form-label"></label>
+                        <input asp-for="EditModel.DueAt" class="form-control" type="datetime-local" />
+                        <span asp-validation-for="EditModel.DueAt" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="EditModel.MaxScore" class="form-label"></label>
+                        <input asp-for="EditModel.MaxScore" class="form-control" />
+                        <span asp-validation-for="EditModel.MaxScore" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn sims-btn-orange">
+                        @(Model.EditModel.Id.HasValue ? "Save changes" : "Create assignment")
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

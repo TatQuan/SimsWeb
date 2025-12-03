@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SimsWeb.ViewModels.Assignments.ClassSectionCardVM>
+
+@{
+    ViewData["Title"] = "Assignments - Classes";
+}
+
+<h2>My Classes</h2>
+<hr />
+
+@if (!Model.Any())
+{
+    <p>No classes found.</p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@item.ClassName</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.CourseName</h6>
+                        <p class="card-text flex-grow-1">
+                            Students: @item.StudentCount
+                        </p>
+
+                        <!-- TODO:
+                             Hiện tại ta chưa có action lấy assignment theo class.
+                             Khi đã có assignmentId, thay asp-route-id bằng id assignment tương ứng.
+                        -->
+                        <a class="btn sims-btn-orange mt-auto"
+                           asp-controller="FacultyAssignment"
+                           asp-action="Manage"
+                           asp-route-classSectionId="@item.ClassSectionId">
+                            Manage Assignments
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

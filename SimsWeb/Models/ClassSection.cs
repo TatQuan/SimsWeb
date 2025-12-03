@@ -27,6 +27,7 @@ namespace SimsWeb.Models
         public bool IsDeleted { get; set; } = false;
 
         public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+        public ICollection<Assignment> Assignments { get; set; } = new List<Assignment>();
     }
 }
 

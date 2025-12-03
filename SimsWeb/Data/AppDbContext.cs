@@ -15,6 +15,7 @@ namespace SimsWeb.Data
         public DbSet<ClassSchedule> ClassSchedules { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<AssignmentSubmission> AssignmentSubmissions { get; set; }
+        public DbSet<AssignmentResource> AssignmentResources { get; set; }
 
 
         public AppDbContext(DbContextOptions options) : base(options)

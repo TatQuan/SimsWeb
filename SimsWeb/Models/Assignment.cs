@@ -26,10 +26,20 @@ namespace SimsWeb.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public bool IsDeleted { get; set; } = false;
-        public string? ExerciseFilePath { get; set; }   // ex: /uploads/assignments/materials/1_exercise.pdf
-        public string? GuideFilePath { get; set; }      // ex: /uploads/assignments/materials/1_guide.pdf
 
+        // === Assignment Brief (file đề bài chính) ===
+        // ex: /uploads/assignments/1_brief.pdf
+        public string? ExerciseFilePath { get; set; }
 
+        // === File hướng dẫn/guide (cũng có thể show trong Document) ===
+        // ex: /uploads/assignments/1_guide.pdf
+        public string? GuideFilePath { get; set; }
+
+        // === Danh sách Document (tài liệu bổ sung) ===
+        public ICollection<AssignmentResource> Resources { get; set; }
+            = new List<AssignmentResource>();
+
+        // Danh sách submissions của sinh viên
         public ICollection<AssignmentSubmission> Submissions { get; set; }
             = new List<AssignmentSubmission>();
     }

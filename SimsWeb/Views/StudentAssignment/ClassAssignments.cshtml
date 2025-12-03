@@ -1,0 +1,53 @@
+﻿@model SimsWeb.ViewModels.Assignments.StudentClassAssignmentsVM
+
+@{
+    ViewData["Title"] = "Class Assignments";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h4 class="mb-0">@Model.ClassName</h4>
+        <small class="text-muted">@Model.CourseName</small>
+    </div>
+    <div>
+        <a class="btn btn-sm sims-btn-outline-orange"
+           asp-controller="StudentAssignment" asp-action="Index">
+            Back to Classes
+        </a>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <strong>Assignments</strong>
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Assignments.Any())
+        {
+            <div class="p-3 text-muted">
+                No assignments available for this class yet.
+            </div>
+        }
+        else
+        {
+            <div class="list-group list-group-flush">
+                @foreach (var a in Model.Assignments)
+                {
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>@a.Title</strong>
+                            <div class="small text-muted">
+                                Due: @a.DueAt.ToString("yyyy-MM-dd HH:mm")
+                            </div>
+                        </div>
+                        <a class="btn btn-sm sims-btn-orange"
+                           asp-action="Details"
+                           asp-route-id="@a.Id">
+                            Open
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

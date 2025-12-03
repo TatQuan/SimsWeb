@@ -17,4 +17,6 @@ public class Student
     public string StudentCode => $"STU{Id.ToString().PadLeft(4, '0')}";
 
     public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+    public ICollection<AssignmentSubmission> AssignmentSubmissions { get; set; }
+    = new List<AssignmentSubmission>();
 }
