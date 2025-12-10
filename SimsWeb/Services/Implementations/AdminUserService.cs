@@ -227,5 +227,7 @@ namespace SimsWeb.Services.Implementations
             var result = await userManager.DeleteAsync(user);
             return result.Succeeded;
         }
+
+
     }
 }

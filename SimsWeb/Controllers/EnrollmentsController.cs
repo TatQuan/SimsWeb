@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace SimsWeb.Controllers
 {
-
+    [Authorize]
     public class EnrollmentsController : Controller
     {
         private readonly IEnrollmentService _enrollmentService;

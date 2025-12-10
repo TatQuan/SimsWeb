@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36705.20 d17.14
+VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimsWeb", "SimsWeb\SimsWeb.csproj", "{249DFD48-9C9B-4BA5-89A3-520F2B49019C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFunctionSims", "TestFunctionSims\TestFunctionSims.csproj", "{79600D8B-C402-4869-A102-016B0BDD565E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{249DFD48-9C9B-4BA5-89A3-520F2B49019C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{249DFD48-9C9B-4BA5-89A3-520F2B49019C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{249DFD48-9C9B-4BA5-89A3-520F2B49019C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79600D8B-C402-4869-A102-016B0BDD565E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79600D8B-C402-4869-A102-016B0BDD565E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79600D8B-C402-4869-A102-016B0BDD565E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79600D8B-C402-4869-A102-016B0BDD565E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

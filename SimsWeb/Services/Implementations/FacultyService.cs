@@ -70,13 +70,16 @@ namespace SimsWeb.Services.Implementations
                 .Select(f => f.UserId)
                 .ToListAsync();
 
-            var list = facultyUsers.Where(u => !existingIds.Contains(u.Id) || u.Id == model.UserId);
+            var list = facultyUsers.Where(u => !existingIds.Contains(u.Id) || u.Id == model.UserId).Where(u => !u.IsDeleted)
+                .ToList();
 
             //var list = facultyUsers
             //    .Where(u => !u.IsDeleted)
             //    .ToList();
 
-            //model.FacultyUsers = list;
+            model.FacultyUsers = list.ToList();
+            if (model == null) return;
+
         }
 
         // ============= BUILD CREATE VM =============

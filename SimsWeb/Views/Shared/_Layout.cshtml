@@ -56,8 +56,8 @@
                     View Courses
                 </a>
 
-                @if (User.IsInRole("Student") || User.IsInRole("Faculty"))
-                {
+                @* @if (User.IsInRole("Student") || User.IsInRole("Faculty"))
+                { *@
                     <a asp-controller="Enrollments" asp-action="Index"
                         class="nav-link sims-sidebar-link @(currentController == "Enrollments" ? "active" : "")">
                         View Class
@@ -87,7 +87,7 @@
                             Assignments
                         </a>
                     }
-                }
+                @* } *@
 
 
 
